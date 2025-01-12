@@ -1,3 +1,20 @@
+# Database Setup
+
+- Create an account at `supabase`
+- Create an `organization`
+- In that organization, create a new `project`
+- Click on the `connect` option in the top navbar.
+- Under `Connection String` tab, copy the URI under `Transaction pooler`
+- This String will be your `postgres_url` in the upcoming section.
+
+# Email Setup
+
+- Use your Gmail account. go to this url `https://myaccount.google.com/`
+- In the `search bar`, search for `App Passwords` and go to that section.
+- Create a new App Password, copy that and store it in a secure place, or write it down.
+- (Note: you would be asked to enable 2 factor authorizatio for your account).
+- This will be your `GOOGLE_APP_PASSWORD` in the upcoming section.
+
 # Backend Setup
 
 ## .env File Format
