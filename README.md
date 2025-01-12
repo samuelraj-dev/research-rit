@@ -1,7 +1,8 @@
 # Package Manager Information
 
 - I'm using `pnpm` as the package manager for this project.
-- use `pnpm i` to install the dependencies in both frontend and backend.
+- use `npm i -g pnpm` to install it.
+- use `pnpm i` to install the dependencies from `package.json` in both frontend and backend. This will install all dependencies of the project to the `node_modules` folder
 - use `pnpm add <your_package_name>` to install packages.
 - use `pnpm dev` to start the development server.
 
