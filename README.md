@@ -57,7 +57,7 @@ AWS_SECRET_ACCESS_KEY=""
 ```
 
 ## Multimedia uploads setup
-- Create `uploads` folder in the root folder of backend.
+- Create `uploads` folder in the root of your backend folder.
 - The correct path should be `./backend/uploads`
 
 ## Generating functions and triggers for our database
