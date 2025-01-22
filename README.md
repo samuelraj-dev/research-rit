@@ -36,39 +36,95 @@ ARGON_SALT=<numbers (recommended: 10)>
 
 GOOGLE_EMAIL=<your_google_email>
 GOOGLE_APP_PASSWORD=<your_google_app_password>
+
+# The services using the variables down below aren't ready yet btw.
+# But these are required by the application.
+# So it's better defining as empty string for now.
+AWS_S3_ENDPOINT_URL=""
+AWS_REGION=""
+AWS_ACCESS_KEY_ID=""
+AWS_SECRET_ACCESS_KEY=""
 ```
 
-## drizzle.config.ts Format
-Create a `drizzle.config.ts` file in the root of the `backend` folder with the following content:
-
-```
-import { defineConfig } from "drizzle-kit";
-
-export default defineConfig({
-    out: "./migrations",
-    dialect: "postgresql",
-    schema: "./src/db/schema.ts",
-
-    dbCredentials: {
-        url: "<your-postgres-url>",
-    },
-    
-    breakpoints: false
-});
-
-```
-
-This configuration will define the migration output folder, the database dialect as PostgreSQL, and the location of your schema file.
-
-## Applying Migrations to Your PostgreSQL Database
-To apply migrations to your PostgreSQL database, follow these steps:
+## Generating functions and triggers for our database
 - Navigate to the `backend` folder.
 - Run the following commands:
 
 ```
-npm run db:generate
-npm run db:migrate
+pnpm db:generate
+pnpm db:generate --custom
 ```
 
-- `npm run db:generate`: Generates the necessary migration files.
-- `npm run db:migrate`: Applies the generated migrations to your PostgreSQL database.
+- In the `./backend/migrations` folder, open the `sql` file starting with the name `0001_`.
+- Copy paste the following code into that sql file.
+
+```
+CREATE OR REPLACE FUNCTION set_default_indexing_values()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.indexing IS NULL THEN
+        NEW.indexing := '{}'::jsonb;
+    END IF;
+    
+    NEW.indexing := jsonb_set(
+        NEW.indexing,
+        '{scopus}',
+        COALESCE((NEW.indexing -> 'scopus')::jsonb, 'false'::jsonb)
+    );
+    NEW.indexing := jsonb_set(
+        NEW.indexing,
+        '{sci}',
+        COALESCE((NEW.indexing -> 'sci')::jsonb, 'false'::jsonb)
+    );
+    NEW.indexing := jsonb_set(
+        NEW.indexing,
+        '{esc}',
+        COALESCE((NEW.indexing -> 'esc')::jsonb, 'false'::jsonb)
+    );
+    NEW.indexing := jsonb_set(
+        NEW.indexing,
+        '{other,indexed}',
+        COALESCE((NEW.indexing #> '{other,indexed}')::jsonb, 'false'::jsonb)
+    );
+    NEW.indexing := jsonb_set(
+        NEW.indexing,
+        '{other,name}',
+        COALESCE((NEW.indexing #> '{other,name}')::jsonb, '""'::jsonb)
+    );
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_set_default_indexing_values_book
+BEFORE INSERT OR UPDATE ON book
+FOR EACH ROW
+EXECUTE FUNCTION set_default_indexing_values();
+
+CREATE TRIGGER trigger_set_default_indexing_values_book_chapter
+BEFORE INSERT OR UPDATE ON book_chapter
+FOR EACH ROW
+EXECUTE FUNCTION set_default_indexing_values();
+
+CREATE TRIGGER trigger_set_default_indexing_values_conference
+BEFORE INSERT OR UPDATE ON conference
+FOR EACH ROW
+EXECUTE FUNCTION set_default_indexing_values();
+
+CREATE TRIGGER trigger_set_default_indexing_values_journal
+BEFORE INSERT OR UPDATE ON journal
+FOR EACH ROW
+EXECUTE FUNCTION set_default_indexing_values();
+```
+
+## Applying Migrations to Your PostgreSQL Database
+To apply migrations to your PostgreSQL database, follow these steps:
+- Navigate to the `backend` folder.
+- Run the following command:
+
+```
+pnpm db:migrate
+```
+
+- `pnpm db:generate`: Generates the necessary migration files.
+- `pnpm db:migrate`: Applies the generated migrations to your PostgreSQL database.
