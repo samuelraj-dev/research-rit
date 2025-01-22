@@ -19,8 +19,8 @@
 
 - Use your Gmail account. go to this url `https://myaccount.google.com/`
 - In the `search bar`, search for `App Passwords` and go to that section.
-- Create a new App Password, copy that and store it in a secure place, or write it down.
-- (Note: you would be asked to enable 2 factor authorizatio for your account).
+- Create a new App Password, copy that and store it in a secure place, or write it down. **important**: be vigilant, as the `App Password` is shown only once to you. if lost, it can't be recovered, and you need to create a new App Password.
+- (Note: you would be asked to enable 2 factor authorization for your account).
 - This will be your `GOOGLE_APP_PASSWORD` in the upcoming section.
 
 # OTP Troubleshooting
@@ -31,7 +31,7 @@
 - You can copy it and use it as your OTP.
 
 ## Instructions to see the OTP through Email
--If you can't see the OTP in your email, Please check the `spam` folder.
+- If you can't see the OTP in your email, Please check the `spam` folder.
 
 # Backend Setup
 
@@ -138,6 +138,15 @@ pnpm db:migrate
 
 - `pnpm db:generate`: Generates the necessary migration files.
 - `pnpm db:migrate`: Applies the generated migrations to your PostgreSQL database.
+
+## Starting the Backend Application
+- Open the root of your backend in terminal
+- Run the following commands:
+
+```
+pnpm i
+pnpm dev
+```
 
 ## Seeding the database with an organization
 As our application is **multi-tenant**, organizations **can't signup**.
