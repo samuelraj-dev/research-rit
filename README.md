@@ -23,6 +23,16 @@
 - (Note: you would be asked to enable 2 factor authorizatio for your account).
 - This will be your `GOOGLE_APP_PASSWORD` in the upcoming section.
 
+# OTP Troubleshooting
+## Instructions to see the OTP through Supabase
+- Navigate to `Table Editor` section of your project in Supabase.
+- Choose the `user` table.
+- Scroll **horizontally** to view the `verification_code` column. You can see the OTPs now.
+- You can copy it and use it as your OTP.
+
+## Instructions to see the OTP through Email
+-If you can't see the OTP in your email, Please check the `spam` folder.
+
 # Backend Setup
 
 ## .env File Format
@@ -149,13 +159,3 @@ Follow the instructions below:
   ```
 - Click the `Send` button to create a new organization.
 - Congrats if the response status is `201`.
-
-## OTP Troubleshooting
-### Instructions to see the OTP through Supabase
-- Navigate to `Table Editor` section of your project in Supabase.
-- Choose the `user` table.
-- Scroll **horizontally** to view the `verification_code` column. You can see the OTPs now.
-- You can copy it and use it as your OTP.
-
-### Instructions to see the OTP through Email
-If you can't see the OTP in your email, Please check the `spam` folder.
