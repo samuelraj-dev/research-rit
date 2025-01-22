@@ -128,3 +128,34 @@ pnpm db:migrate
 
 - `pnpm db:generate`: Generates the necessary migration files.
 - `pnpm db:migrate`: Applies the generated migrations to your PostgreSQL database.
+
+## Seeding the database with an organization
+As our application is **multi-tenant**, organizations **can't signup**.
+So, we are manually going to insert an organization into the database.
+I will be using `Postman` to the the api request.
+Follow the instructions below:
+
+- Navigate to `./backend/src/modules/applications/applications.routes.ts`.
+- Uncomment `line 11`, the line with this code -> `router.post("/", createApplicationHandler);`.
+- Open Postman.
+- Set URL as `http://localhost:5000/api/applications` and method as `POST`.
+- Select `Body` tab under the URL bar. Then choose the option `raw`. Make sure the type to be `JSON`.
+- we are going to set the JSON object with two fields, `name` and `workEmail` respectively. An example is down below:
+- ```
+  {
+      "name": "app1",
+      "workEmail": <your_email>
+  }
+  ```
+- Click the `Send` button to create a new organization.
+- Congrats if the response status is `201`.
+
+## OTP Troubleshooting
+### Instructions to see the OTP through Supabase
+- Navigate to `Table Editor` section of your project in Supabase.
+- Choose the `user` table.
+- Scroll **horizontally** to view the `verification_code` column. You can see the OTPs now.
+- You can copy it and use it as your OTP.
+
+### Instructions to see the OTP through Email
+If you can't see the OTP in your email, Please check the `spam` folder.
