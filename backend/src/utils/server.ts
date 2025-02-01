@@ -25,6 +25,7 @@ export function buildServer() {
     const app = express();
 
     app.use('/uploads', express.static(path.join(__dirname, '..', '..', 'uploads'))); 
+    app.use(express.static(path.join(__dirname, '..', '..', '..', 'frontend-2', 'dist'))); 
 
     app.use(session({
         store: new PgSession({
@@ -53,6 +54,10 @@ export function buildServer() {
     app.use("/api/applications", applicationRoutes);
     app.use("/api/users", usersRoutes);
     app.use("/api/research-papers", researchPaperRoutes);
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, '..', '..', '..', 'frontend-2', 'dist', 'index.html'));
+    });
 
     return app;
 }
