@@ -1,3 +1,3 @@
-export const BASE_API_URL = "http://topoship.com:4200/api";
-export const BASE_URL = "http://topoship.com:4200";
-// export const BASE_URL = "http://localhost:5000/api";
+export const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
