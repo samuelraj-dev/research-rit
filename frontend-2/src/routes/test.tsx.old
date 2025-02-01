@@ -1,0 +1,52 @@
+import Sidebar, { SidebarItem } from '@/app/components/Sidebar/old'
+import { Separator } from '@radix-ui/react-separator'
+import { createFileRoute } from '@tanstack/react-router'
+import { Indent, LayoutDashboard, LogOut, Settings, Upload, UploadCloud, UserCircle } from 'lucide-react'
+
+export const Route = createFileRoute('/test')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  return <Sidebar>
+  <SidebarItem
+      icon={<LayoutDashboard size={20} />}
+      text="Dashboard"
+      // active={true}
+  />
+  <SidebarItem
+      icon={<UploadCloud size={20} />}
+      text="User Uploads"
+  />
+  <SidebarItem
+      icon={<UserCircle size={20} />}
+      text="Manage Users"
+  />
+  <Separator orientation="horizontal" className="" />
+  <SidebarItem
+      icon={<Upload size={20} />}
+      text="Upload Paper"
+  />
+  <SidebarItem
+      icon={<UploadCloud size={20} />}
+      text="Previous Uploads"
+  />
+  <SidebarItem
+      icon={<Indent size={20} />}
+      text="Academic Identity"
+  />
+  <Separator orientation="horizontal" className="" />
+  <SidebarItem
+      icon={<UserCircle size={20} />}
+      text="Profile"
+  />
+  <SidebarItem
+      icon={<Settings size={20} />}
+      text="Settings"
+  />
+  <SidebarItem
+      icon={<LogOut size={20} />}
+      text="Logout"
+  />
+</Sidebar>
+}

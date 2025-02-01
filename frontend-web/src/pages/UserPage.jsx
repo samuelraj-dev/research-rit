@@ -172,7 +172,7 @@ const UserPage = ({ journalsRef,bookRef , bookChaptersRef, conferencesRef, paten
 
               <div className="flex justify-between space-x-4 w-full">
                 {[
-                  { title: 'Journals', bg: 'rgba(255, 99, 132, 0.4)', border: 'rgba(255, 99, 132, 1)', count: publicationNumbers.journals, ref: journalsRef },
+                  { title: 'Journals', bg: 'rgba(255, 99, 132, 0.4)', border: 'rgba(255, 99, 132, 1)', count: publicationNumbers.journals },
                   { title: 'Books ', bg: '#36A2EB66', border: '#36A2EB', count: publicationNumbers.books, ref: bookRef },
                   { title: 'Book Chapters', bg: 'rgba(255, 206, 86, 0.4)', border: 'rgba(255, 206, 86, 1)', count: publicationNumbers.bookChapters, ref: bookChaptersRef },
                   { title: 'Conferences', bg: 'rgba(75, 192, 192, 0.4)', border: 'rgba(75, 192, 192, 1)', count: publicationNumbers.conferences, ref: conferencesRef },

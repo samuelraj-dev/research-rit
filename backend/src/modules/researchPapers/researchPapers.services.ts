@@ -4,7 +4,6 @@ import { db } from "../../db";
 import { researchPaper } from "../../db/schema";
 import { CreateUserResearchPaperBody } from "./researchPapers.schemas";
 import camelCaseToUnderscore from "../../utils/camelCaseToUnderscore";
-import e from "express";
 
 export async function createUserResearchPaper({
     userId, applicationId, type, data, mediaUrl
@@ -97,27 +96,50 @@ export async function getUserResearchPapersCountByType({
     //         eq(researchPaper.applicationId, applicationId)
     //     )   
 
-    const query = sql`
+    const typeCountQuery = sql`
         SELECT 
             json_object_agg(type, count) AS result
         FROM (
             SELECT 
-                type,
-                COUNT(*) AS count
+                t.type,
+                COALESCE(rp.count, 0) AS count
             FROM 
-                research_paper
-            WHERE 
-                user_id = ${userId}
-                AND
-                status = 'ACCEPTED'
-            GROUP BY 
-                type
+                (VALUES ('journal'), ('book'), ('bookChapter'), ('conference'), ('patent'), ('copyright')) AS t(type)
+            LEFT JOIN (
+                SELECT 
+                    type,
+                    COUNT(*) AS count
+                FROM 
+                    research_paper
+                WHERE 
+                    user_id = ${userId}
+                    AND
+                    status = 'ACCEPTED'
+                GROUP BY 
+                    type
+            ) rp
+            ON t.type = rp.type
         ) subquery;
     `;
-    
-    const result = await db.execute(query);
 
-    return result.rows[0].result;
+    const totalCountQuery = sql`
+        SELECT 
+            COUNT(*) AS result
+        FROM 
+            research_paper
+        WHERE 
+            user_id = ${userId}
+            AND
+            status = 'ACCEPTED';
+    `;
+    
+    const typeCountResult = await db.execute(typeCountQuery);
+    const totalCountResult = await db.execute(totalCountQuery);
+
+    return {
+        ...typeCountResult.rows[0].result,
+        total: totalCountResult.rows[0].result,
+    };
 }
 
 
@@ -144,11 +166,18 @@ export async function getUserResearchPapersByType({
     
     const query = sql`
         SELECT json_agg(
-            to_jsonb(${sql.raw(tableName)}) || jsonb_build_object('status', research_paper.status)
+            to_jsonb(sub_query.*)
         ) AS research_papers
-        FROM ${sql.raw(tableName)}
-        LEFT JOIN research_paper ON research_paper.id = ${sql.raw(tableName)}.id
-        WHERE research_paper.user_id = ${userId};
+        FROM (
+            SELECT 
+                ${sql.raw(tableName)}.*, 
+                research_paper.status, 
+                research_paper.user_id
+            FROM ${sql.raw(tableName)}
+            LEFT JOIN research_paper ON research_paper.id = ${sql.raw(tableName)}.id
+            WHERE research_paper.user_id = ${userId}
+            ORDER BY research_paper.created_at DESC
+        ) AS sub_query;
     `;
     
     const result = await db.execute(query);

@@ -58,7 +58,9 @@ export async function getUsersByApplication({ applicationId, roleId }: {applicat
         )
     )
 
-    return result;
+    const users = result.map(({ password, verificationCode, verificationCodeExpiration, ...rest }) => rest);
+
+    return users;
 }
 
 export async function getUsersCountByDept({

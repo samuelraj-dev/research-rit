@@ -15,7 +15,6 @@ const sharedFields = {
         }).optional()
     }).optional(),
     link: z.string(),
-    // mediaUrl: z.string()
 }
 
 const bookSharedFields = {

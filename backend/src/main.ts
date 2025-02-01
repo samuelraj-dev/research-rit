@@ -55,7 +55,12 @@ async function main() {
 }
 
 main().catch((error) => {
+<<<<<<< Updated upstream
     logger.error("Failed to start application:");
     logger.error(error)
+=======
+    logger.error("Failed to start application:", error);
+    logger.error(error);
+>>>>>>> Stashed changes
     process.exit(1);
 });
