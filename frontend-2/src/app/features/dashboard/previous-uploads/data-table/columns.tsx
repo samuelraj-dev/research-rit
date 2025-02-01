@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, Bolt, FileText } from "lucide-react"
 import { Book, BookChapter, Conference, Copyright, Journal, Patent } from "./schema"
 import { ColumnHeader } from "@/app/components/data-table/column-header"
+import { BASE_URL } from "@/libs/constants/server-endpoint"
 
 export const journalColumns: ColumnDef<Journal>[] = [
   {
@@ -108,7 +109,7 @@ export const journalColumns: ColumnDef<Journal>[] = [
       return (
         row.getValue("media_url")
         ?
-          <a href={`http://localhost:5000${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          <a href={`${BASE_URL}${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
             <FileText size={20} className="mr-1" />open
           </a>
         : <div>No media</div>
@@ -302,7 +303,7 @@ export const bookColumns: ColumnDef<Book>[] = [
       return (
         row.getValue("media_url")
         ?
-          <a href={`http://localhost:5000${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          <a href={`${BASE_URL}${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
             <FileText size={20} className="mr-1" />open
           </a>
         : <div>No media</div>
@@ -482,7 +483,7 @@ export const bookChapterColumns: ColumnDef<BookChapter>[] = [
       return (
         row.getValue("media_url")
         ?
-          <a href={`http://localhost:5000${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          <a href={`${BASE_URL}${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
             <FileText size={20} className="mr-1" />open
           </a>
         : <div>No media</div>
@@ -669,7 +670,7 @@ export const conferenceColumns: ColumnDef<Conference>[] = [
       return (
         row.getValue("media_url")
         ?
-          <a href={`http://localhost:5000${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          <a href={`${BASE_URL}${row.getValue("media_url")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
             <FileText size={20} className="mr-1" />open
           </a>
         : <div>No media</div>

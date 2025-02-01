@@ -1,5 +1,6 @@
 import { LogoutDialog } from '@/app/components/logout';
 import defaultAvatar from '@/assets/icons/default_avatar.jpg'
+import { BASE_URL } from '@/libs/constants/server-endpoint';
 import { useUserDataQuery } from '@/libs/services/queries/user.query';
 
 function logoutTrigger() {
@@ -38,7 +39,7 @@ export default function ProfileFeature() {
                             {/* Profile Photo */}
                             <div className="flex-shrink-0">
                                 <img
-                                    src={userDataQuery.data.avatarUrl ? `http://localhost:5000${userDataQuery.data.avatarUrl}` : defaultAvatar}
+                                    src={userDataQuery.data.avatarUrl ? `${BASE_URL}${userDataQuery.data.avatarUrl}` : defaultAvatar}
                                     alt="User Profile"
                                     className="w-32 h-32 rounded-full object-cover border-4 border-blue-500"
                                 />

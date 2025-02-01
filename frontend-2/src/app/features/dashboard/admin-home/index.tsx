@@ -21,7 +21,7 @@ export default function AdminHomeFeature() {
     //     if (!userDataQuery.data?.permissions.includes('user:read')) return;
   
     //     try {
-    //       const response = await axios.get('http://localhost:5000/api/research-papers/count-by-type', { withCredentials: true });
+    //       const response = await axios.get('${BASE_URL}/api/research-papers/count-by-type', { withCredentials: true });
     //       if (response.status === 200) {
     //         setResearchPapersCount(response.data?.researchPapersCount ? response.data.researchPapersCount : defaultResearchPapersCount);
     //       } else {

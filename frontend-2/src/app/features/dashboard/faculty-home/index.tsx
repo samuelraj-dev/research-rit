@@ -2,6 +2,7 @@ import { useUserResearchPapersCountByTypeQuery } from '@/libs/services/queries/r
 import { useUserDataQuery } from '@/libs/services/queries/user.query';
 import defaultAvatar from "@/assets/icons/default_avatar.jpg"
 import { ResearchPaperChart } from './research-paper-chart';
+import { BASE_URL } from '@/libs/constants/server-endpoint';
 
 export default function UserHomeFeature() {
     const userResearchPapersCountByTypeQuery = useUserResearchPapersCountByTypeQuery();
@@ -31,7 +32,7 @@ export default function UserHomeFeature() {
                 <div className="flex flex-col rounded-lg bg-white shadow-lg p-6 h-full">
                     <div className="flex flex-col items-center">
                     <img
-                        src={userDataQuery.data.mediaUrl ? `http://localhost:5000${userDataQuery.data.mediaUrl}` : defaultAvatar}
+                        src={userDataQuery.data.mediaUrl ? `${BASE_URL}${userDataQuery.data.mediaUrl}` : defaultAvatar}
                         alt="Profile"
                         className="w-32 h-32 rounded-full border-4 border-gray-200 object-cover shadow-xl mb-3"
                     />

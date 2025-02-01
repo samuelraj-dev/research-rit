@@ -1,7 +1,7 @@
 import axios from "axios";
-import { BASE_URL } from "@/libs/constants/server-endpoint";
+import { BASE_API_URL } from "@/libs/constants/server-endpoint";
 
 export const axiosInstance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: BASE_API_URL,
     withCredentials: true,
 });

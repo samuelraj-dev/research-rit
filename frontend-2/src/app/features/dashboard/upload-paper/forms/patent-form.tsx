@@ -1,3 +1,4 @@
+import { BASE_API_URL } from '@/libs/constants/server-endpoint';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -32,7 +33,7 @@ export const PatentForm = () => {
 
 
     try {
-      const response = await axios.post('http://localhost:5000/api/research-papers/research-paper', formData, {
+      const response = await axios.post(`${BASE_API_URL}/research-papers/research-paper`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
