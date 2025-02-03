@@ -1,5 +1,6 @@
 import { isAuthorized } from '@/libs/utils/auth'
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import UserUploadsFeature from '@/app/features/dashboard/user-uploads'
 
 export const Route = createFileRoute('/dashboard/_layout/user-uploads')({
   beforeLoad: async () => {
@@ -10,9 +11,5 @@ export const Route = createFileRoute('/dashboard/_layout/user-uploads')({
       })
     }
   },
-  component: RouteComponent,
+  component: UserUploadsFeature,
 })
-
-function RouteComponent() {
-  return <div>User Uploads coming soon!</div>
-}

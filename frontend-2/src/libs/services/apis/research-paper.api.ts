@@ -16,6 +16,10 @@ export const getUserResearchPapersByTypeApi = async ({ type }: { type: string })
     return (await axiosInstance.get(`research-papers/research-paper/${type}`)).data;
 };
 
+export const getUsersCountByDeptApi = async () => {
+    return (await axiosInstance.get("users/count-by-dept")).data;
+};
+
 export const getResearchPapersCountByTypeApi = async () => {
     return (await axiosInstance.get("research-papers/count-by-type")).data;
 };

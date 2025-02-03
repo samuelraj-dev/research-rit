@@ -1,7 +1,8 @@
 import { useUserDataQuery } from "@/libs/services/queries/user.query";
 import { Book, BookOpen, Calendar, Copyright, Lightbulb } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UserChart } from "./user-chart";
+import { useResearchPapersCountByTypeQuery, useUsersCountByDeptQuery } from "@/libs/services/queries/research-paper.query";
 
 const defaultResearchPapersCount = {
     book: 0,
@@ -10,34 +11,20 @@ const defaultResearchPapersCount = {
     copyright: 0,
     journal: 0,
     patent: 0,
-  }
+}
 
 export default function AdminHomeFeature() {
+    const researchPapersCountByTypeQuery = useResearchPapersCountByTypeQuery();
+    const usersCountByDeptQuery = useUsersCountByDeptQuery();
     const userDataQuery = useUserDataQuery();
-    const [researchPapersCount, setResearchPapersCount] = useState(defaultResearchPapersCount);
   
-    useEffect(() => {
-    //   const fetchResearchPapersCount = async () => {
-    //     if (!userDataQuery.data?.permissions.includes('user:read')) return;
+    if (researchPapersCountByTypeQuery.isPending || userDataQuery.isPending || usersCountByDeptQuery.isPending) {
+      return <span>loading...</span>;
+    }
   
-    //     try {
-    //       const response = await axios.get('${BASE_URL}/api/research-papers/count-by-type', { withCredentials: true });
-    //       if (response.status === 200) {
-    //         setResearchPapersCount(response.data?.researchPapersCount ? response.data.researchPapersCount : defaultResearchPapersCount);
-    //       } else {
-    //         alert('Error fetching research papers count.');
-    //       }
-    //     } catch (err) {
-    //       console.error('Error fetching research papers count:', err);
-    //       alert('Network error. Please try again later.');
-    //     }
-    //   };
-  
-    //   fetchResearchPapersCount(); 
-    }, [userDataQuery.fetchStatus]);
-  
-    if (userDataQuery.isLoading) return <div>loading</div>
-    if (userDataQuery.isError) return <div className="text-red-500 text-center">{"Error occured"}</div>;
+    if (researchPapersCountByTypeQuery.isError || userDataQuery.isError || usersCountByDeptQuery.isPending) {
+      return <span>error occured...</span>
+    }
   
     const StatCard = ({ Icon, title, count, subtext, bgColor }) => (
         <div className={`max-w-[16rem] p-6 ${bgColor} text-white rounded-lg shadow-lg flex items-center justify-between transform hover:scale-105 duration-300`}>
@@ -66,14 +53,15 @@ export default function AdminHomeFeature() {
               {/* <h2 className="text-xl font-bold mb-4">Registered Users</h2> */}
               {/* <DepartmentPieChart /> */}
             {/* </div> */}
-            <UserChart data={{journal: 10, book: 23, bookChapter: 18, conference: 28}} />
+            {/* <UserChart data={{journal: 10, book: 23, bookChapter: 18, conference: 28}} /> */}
+            <UserChart data={usersCountByDeptQuery.data.usersCount} />
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-              <StatCard Icon={Book} title="Journals" count={researchPapersCount.journal} subtext="Published Journals" bgColor="bg-gradient-to-r from-pink-500 to-pink-700" />
-              <StatCard Icon={Calendar} title="Conferences" count={researchPapersCount.conference} subtext="Organized Conferences" bgColor="bg-gradient-to-r from-orange-500 to-orange-700" />
-              <StatCard Icon={BookOpen} title="Books" count={researchPapersCount.book} subtext="Published Books" bgColor="bg-gradient-to-r from-indigo-500 to-indigo-700" />
-              <StatCard Icon={BookOpen} title="Book Chapters" count={researchPapersCount.bookChapter} subtext="Chapters Published" bgColor="bg-gradient-to-r from-green-500 to-green-700" />
-              <StatCard Icon={Lightbulb} title="Patents" count={researchPapersCount.patent} subtext="Filed Patents" bgColor="bg-gradient-to-r from-purple-500 to-purple-700" />
-              <StatCard Icon={Copyright} title="Copyrights" count={researchPapersCount.copyright} subtext="Copyrights Filed" bgColor="bg-gradient-to-r from-blue-500 to-blue-700" />
+              <StatCard Icon={Book} title="Journals" count={researchPapersCountByTypeQuery.data.researchPapersCount.journal} subtext="Published Journals" bgColor="bg-gradient-to-r from-pink-500 to-pink-700" />
+              <StatCard Icon={Calendar} title="Conferences" count={researchPapersCountByTypeQuery.data.researchPapersCount.conference} subtext="Organized Conferences" bgColor="bg-gradient-to-r from-orange-500 to-orange-700" />
+              <StatCard Icon={BookOpen} title="Books" count={researchPapersCountByTypeQuery.data.researchPapersCount.book} subtext="Published Books" bgColor="bg-gradient-to-r from-indigo-500 to-indigo-700" />
+              <StatCard Icon={BookOpen} title="Book Chapters" count={researchPapersCountByTypeQuery.data.researchPapersCount.bookChapter} subtext="Chapters Published" bgColor="bg-gradient-to-r from-green-500 to-green-700" />
+              <StatCard Icon={Lightbulb} title="Patents" count={researchPapersCountByTypeQuery.data.researchPapersCount.patent} subtext="Filed Patents" bgColor="bg-gradient-to-r from-purple-500 to-purple-700" />
+              <StatCard Icon={Copyright} title="Copyrights" count={researchPapersCountByTypeQuery.data.researchPapersCount.copyright} subtext="Copyrights Filed" bgColor="bg-gradient-to-r from-blue-500 to-blue-700" />
             </div>
           </div>
         </div>

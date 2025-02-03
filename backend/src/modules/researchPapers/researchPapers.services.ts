@@ -213,6 +213,7 @@ export async function getResearchPapersByType({
     const query = sql`
         SELECT json_agg(
             to_jsonb(${sql.raw(tableName)}) || jsonb_build_object('status', research_paper.status)
+            ORDER BY research_paper.created_at DESC
         ) AS research_papers
         FROM ${sql.raw(tableName)}
         LEFT JOIN research_paper ON research_paper.id = ${sql.raw(tableName)}.id

@@ -34,6 +34,15 @@ const Uploads = () => {
       case 'conference':
         fetchResearchPaperByType(ALLOWED_RESEARCH_PAPER_TYPES.conference)
         break;
+        fetchResearchPaperByType(ALLOWED_RESEARCH_PAPER_TYPES.journal)
+        break;
+      case 'bookChapter':
+        fetchResearchPaperByType(ALLOWED_RESEARCH_PAPER_TYPES.bookChapter)
+        break;
+      case 'conference':
+        fetchResearchPaperByType(ALLOWED_RESEARCH_PAPER_TYPES.conference)
+        break;
+      case 'patent':
       case 'patent':
         fetchResearchPaperByType(ALLOWED_RESEARCH_PAPER_TYPES.patent)
         break;

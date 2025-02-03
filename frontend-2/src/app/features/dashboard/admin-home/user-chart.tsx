@@ -19,40 +19,40 @@ const chartConfig = {
   values: {
     label: "Values",
   },
-  journal: {
-    label: "Journal",
+  AIDS: {
+    label: "AIDS",
     color: "hsl(var(--chart-1))",
   },
-  book: {
-    label: "Book",
+  MECH: {
+    label: "MECH",
     color: "hsl(var(--chart-2))",
   },
-  bookChapter: {
-    label: "Book Chapter",
+  CSE: {
+    label: "CSE",
     color: "hsl(var(--chart-3))",
   },
-  conference: {
-    label: "Conference",
+  CSBS: {
+    label: "CSBS",
     color: "hsl(var(--chart-4))",
   },
-  patent: {
-    label: "Patent",
+  ECE: {
+    label: "ECE",
     color: "hsl(var(--chart-5))",
   },
-  copyright: {
-    label: "Copyright",
+  VLSI: {
+    label: "VLSI",
     color: "hsl(var(--chart-6))",
   },
 } satisfies ChartConfig
 export function UserChart({ data }: { data: any }) {
 
   const chartData = [
-    { name: "journal", values: data.journal, fill: "var(--color-journal)" },
-    { name: "book", values: data.book, fill: "var(--color-book)" },
-    { name: "bookChapter", values: data.bookChapter, fill: "var(--color-bookChapter)" },
-    { name: "conference", values: data.conference, fill: "var(--color-conference)" },
-    { name: "patent", values: data.patent, fill: "var(--color-patent)" },
-    { name: "copyright", values: data.copyright, fill: "var(--color-copyright)" },
+    { name: "AIDS", values: data.AIDS, fill: "var(--color-AIDS)" },
+    { name: "MECH", values: data.MECH, fill: "var(--color-MECH)" },
+    { name: "CSE", values: data.CSE, fill: "var(--color-CSE)" },
+    { name: "CSBS", values: data.CSBS, fill: "var(--color-CSBS)" },
+    { name: "ECE", values: data.ECE, fill: "var(--color-ECE)" },
+    { name: "VLSI", values: data.VLSI, fill: "var(--color-VLSI)" },
   ]
 
   return (
