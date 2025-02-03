@@ -56,12 +56,12 @@ export default function AdminHomeFeature() {
             {/* <UserChart data={{journal: 10, book: 23, bookChapter: 18, conference: 28}} /> */}
             <UserChart data={usersCountByDeptQuery.data.usersCount} />
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
-              <StatCard Icon={Book} title="Journals" count={researchPapersCountByTypeQuery.data.researchPapersCount.journal} subtext="Published Journals" bgColor="bg-gradient-to-r from-pink-500 to-pink-700" />
-              <StatCard Icon={Calendar} title="Conferences" count={researchPapersCountByTypeQuery.data.researchPapersCount.conference} subtext="Organized Conferences" bgColor="bg-gradient-to-r from-orange-500 to-orange-700" />
-              <StatCard Icon={BookOpen} title="Books" count={researchPapersCountByTypeQuery.data.researchPapersCount.book} subtext="Published Books" bgColor="bg-gradient-to-r from-indigo-500 to-indigo-700" />
-              <StatCard Icon={BookOpen} title="Book Chapters" count={researchPapersCountByTypeQuery.data.researchPapersCount.bookChapter} subtext="Chapters Published" bgColor="bg-gradient-to-r from-green-500 to-green-700" />
-              <StatCard Icon={Lightbulb} title="Patents" count={researchPapersCountByTypeQuery.data.researchPapersCount.patent} subtext="Filed Patents" bgColor="bg-gradient-to-r from-purple-500 to-purple-700" />
-              <StatCard Icon={Copyright} title="Copyrights" count={researchPapersCountByTypeQuery.data.researchPapersCount.copyright} subtext="Copyrights Filed" bgColor="bg-gradient-to-r from-blue-500 to-blue-700" />
+              <StatCard Icon={Book} title="Journals" count={researchPapersCountByTypeQuery.data.researchPapersCount.journal || 0} subtext="Published Journals" bgColor="bg-gradient-to-r from-pink-500 to-pink-700" />
+              <StatCard Icon={Calendar} title="Conferences" count={researchPapersCountByTypeQuery.data.researchPapersCount.conference || 0} subtext="Organized Conferences" bgColor="bg-gradient-to-r from-orange-500 to-orange-700" />
+              <StatCard Icon={BookOpen} title="Books" count={researchPapersCountByTypeQuery.data.researchPapersCount.book || 0} subtext="Published Books" bgColor="bg-gradient-to-r from-indigo-500 to-indigo-700" />
+              <StatCard Icon={BookOpen} title="Book Chapters" count={researchPapersCountByTypeQuery.data.researchPapersCount.bookChapter || 0} subtext="Chapters Published" bgColor="bg-gradient-to-r from-green-500 to-green-700" />
+              <StatCard Icon={Lightbulb} title="Patents" count={researchPapersCountByTypeQuery.data.researchPapersCount.patent || 0} subtext="Filed Patents" bgColor="bg-gradient-to-r from-purple-500 to-purple-700" />
+              <StatCard Icon={Copyright} title="Copyrights" count={researchPapersCountByTypeQuery.data.researchPapersCount.copyright || 0} subtext="Copyrights Filed" bgColor="bg-gradient-to-r from-blue-500 to-blue-700" />
             </div>
           </div>
         </div>
