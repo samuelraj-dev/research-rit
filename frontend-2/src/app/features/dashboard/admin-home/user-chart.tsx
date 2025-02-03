@@ -47,12 +47,12 @@ const chartConfig = {
 export function UserChart({ data }: { data: any }) {
 
   const chartData = [
-    { name: "AIDS", values: data.AIDS, fill: "var(--color-AIDS)" },
-    { name: "MECH", values: data.MECH, fill: "var(--color-MECH)" },
-    { name: "CSE", values: data.CSE, fill: "var(--color-CSE)" },
-    { name: "CSBS", values: data.CSBS, fill: "var(--color-CSBS)" },
-    { name: "ECE", values: data.ECE, fill: "var(--color-ECE)" },
-    { name: "VLSI", values: data.VLSI, fill: "var(--color-VLSI)" },
+    { name: "AIDS", values: data?.AIDS || 0, fill: "var(--color-AIDS)" },
+    { name: "MECH", values: data?.MECH || 0, fill: "var(--color-MECH)" },
+    { name: "CSE", values: data?.CSE || 0, fill: "var(--color-CSE)" },
+    { name: "CSBS", values: data?.CSBS || 0, fill: "var(--color-CSBS)" },
+    { name: "ECE", values: data?.ECE || 0, fill: "var(--color-ECE)" },
+    { name: "VLSI", values: data?.VLSI || 0, fill: "var(--color-VLSI)" },
   ]
 
   return (
