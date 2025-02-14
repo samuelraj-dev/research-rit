@@ -144,7 +144,13 @@ export const journalColumns: ColumnDef<Journal>[] = [
     header: ({ column }) => (
         <ColumnHeader column={column} title="DOI" />
     ),
-    cell: ({ row }) => <div>{row.getValue("doi")}</div>,
+    cell: ({ row }) => {
+      return (
+        <a href={`https://doi.org/${row.getValue("doi")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          {row.getValue("doi")}
+        </a>
+      )
+    }
   },
   {
     accessorKey: "indexing.scopus",
@@ -705,7 +711,13 @@ export const conferenceColumns: ColumnDef<Conference>[] = [
     header: ({ column }) => (
         <ColumnHeader column={column} title="DOI" />
     ),
-    cell: ({ row }) => <div>{row.getValue("doi")}</div>,
+    cell: ({ row }) => {
+      return (
+        <a href={`https://doi.org/${row.getValue("doi")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          {row.getValue("doi")}
+        </a>
+      )
+    }
   },
   {
     accessorKey: "indexing.scopus",

@@ -6,9 +6,10 @@ export const Route = createFileRoute('/dashboard/_layout/previous-uploads')({
   beforeLoad: async () => {
     
     if (!(await isAuthorized('research_paper:own_read'))) {
-      throw redirect({
-        to: '/'
-      })
+      // throw redirect({
+      //   to: '/'
+      // })
+      throw window.location.href = '/'
     }
   },
   component: PreviousUploadsFeature,

@@ -6,6 +6,80 @@ import { MoreHorizontal, Bolt, FileText } from "lucide-react"
 import { Book, BookChapter, Conference, Copyright, Journal, Patent } from "./schema"
 import { ColumnHeader } from "@/app/components/data-table/column-header"
 import { BASE_URL } from "@/libs/constants/server-endpoint"
+import { useSetResearchPaperStatusMutation } from "@/libs/services/mutations/research-paper.mutation"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/ui/dialog"
+import { useState } from "react"
+
+export function ConfirmationDialog({ open, setOpen, row, type }) {
+  const setResearchPaperStatusMutation = useSetResearchPaperStatusMutation();
+  
+  return (
+    <Dialog open={open}>
+        <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+                <DialogTitle>Are you sure?</DialogTitle>
+            </DialogHeader>
+            <DialogDescription></DialogDescription>
+            <span className="text-muted-foreground">You are about to {type == 'ACCEPTED' ? 'Accept' : 'Reject'} this paper</span>
+            <DialogFooter>
+              <Button
+                variant={"default"}
+                disabled={setResearchPaperStatusMutation.isPending}
+                onClick={() => {
+                  setResearchPaperStatusMutation.mutate({
+                      id: row.original.id,
+                      type
+                    },
+                    {
+                      onSuccess: () => {
+                        setOpen(false)
+                      }
+                    }
+                  )
+                }
+              }>{type == 'ACCEPTED' ? 'Accept' : 'Reject'}</Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+  )
+}
+
+function ActionsDropDown({ row }) {
+    const isPending = row.original.status === 'PENDING'
+    const [acceptOpen, setAcceptOpen] = useState(false);
+    const [rejectOpen, setRejectOpen] = useState(false);
+
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>View Paper</DropdownMenuItem>
+            {isPending &&
+              <>
+                <DropdownMenuSeparator />
+                {/* <ConfirmationDialog row type='ACCEPTED' /> */}
+                <DropdownMenuItem onClick={() => setAcceptOpen(true)}>
+                  <span className="text-green-500">Accept</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setRejectOpen(true)}>
+                  <span className="text-red-500">Reject</span>
+                </DropdownMenuItem>
+              </>
+            }
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <ConfirmationDialog open={acceptOpen} setOpen={setAcceptOpen} row={row} type='ACCEPTED' />
+        <ConfirmationDialog open={rejectOpen} setOpen={setRejectOpen} row={row} type='REJECTED' />
+      </>
+    )
+}
 
 export const journalColumns: ColumnDef<Journal>[] = [
   {
@@ -37,35 +111,7 @@ export const journalColumns: ColumnDef<Journal>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span className="text-green-500">Accept</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Reject</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",
@@ -144,7 +190,13 @@ export const journalColumns: ColumnDef<Journal>[] = [
     header: ({ column }) => (
         <ColumnHeader column={column} title="DOI" />
     ),
-    cell: ({ row }) => <div>{row.getValue("doi")}</div>,
+    cell: ({ row }) => {
+      return (
+        <a href={`https://doi.org/${row.getValue("doi")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          {row.getValue("doi")}
+        </a>
+      )
+    }
   },
   {
     accessorKey: "indexing.scopus",
@@ -231,35 +283,7 @@ export const bookColumns: ColumnDef<Book>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Delete</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",
@@ -411,35 +435,7 @@ export const bookChapterColumns: ColumnDef<BookChapter>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Delete</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",
@@ -598,35 +594,7 @@ export const conferenceColumns: ColumnDef<Conference>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Delete</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",
@@ -705,7 +673,13 @@ export const conferenceColumns: ColumnDef<Conference>[] = [
     header: ({ column }) => (
         <ColumnHeader column={column} title="DOI" />
     ),
-    cell: ({ row }) => <div>{row.getValue("doi")}</div>,
+    cell: ({ row }) => {
+      return (
+        <a href={`https://doi.org/${row.getValue("doi")}`} target="_blank" className="w-full flex justify-center underline hover:text-primary">
+          {row.getValue("doi")}
+        </a>
+      )
+    }
   },
   {
     accessorKey: "indexing.scopus",
@@ -778,35 +752,7 @@ export const patentColumns: ColumnDef<Patent>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Delete</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",
@@ -910,35 +856,7 @@ export const copyrightColumns: ColumnDef<Copyright>[] = [
     header: () => <div className="font-medium text-xs flex items-center justify-center"><Bolt size={15} /></div>,
     enableHiding: false,
     enableResizing: true,
-    cell: ({ row }) => {
-      const isPending = row.original.status === 'PENDING'
- 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>View Paper</DropdownMenuItem>
-            {isPending &&
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span className="text-red-500">Delete</span>
-                </DropdownMenuItem>
-              </>
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsDropDown row={row} />,
   },
   {
     accessorKey: "status",

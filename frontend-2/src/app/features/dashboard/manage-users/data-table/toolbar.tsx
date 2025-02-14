@@ -7,6 +7,7 @@ import { Button } from "@/app/components/ui/button"
 import { Input } from "@/app/components/ui/input"
 
 import { ViewOptions } from "@/app/components/data-table/view-options"
+import { AddUserDialog } from "../add-user-dialog"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -39,10 +40,11 @@ export function Toolbar<TData>({
           </Button>
         )}
       </div>
-      <Button variant="outline" size="sm" className="h-8 border-dashed mr-2">
+      {/* <Button variant="outline" size="sm" className="h-8 border-dashed mr-2">
         <PlusCircle />
         {"Add User"}
-      </Button>
+      </Button> */}
+      <AddUserDialog />
       <ViewOptions table={table} />
     </div>
   )

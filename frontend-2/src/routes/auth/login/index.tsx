@@ -6,9 +6,10 @@ export const Route = createFileRoute('/auth/login/')({
   beforeLoad: async () => {
     
     if ((await isLoggedIn())) {
-      throw redirect({
-        to: '/dashboard'
-      })
+      // throw redirect({
+      //   to: '/dashboard'
+      // })
+      throw window.location.href = '/dashboard'
     }
   },
   component: LoginFeature,

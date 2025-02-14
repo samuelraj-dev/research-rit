@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { checkUserActivationApi, checkUserOtpApi, loginUserApi, logoutUserApi, setUserPasswordApi } from "../apis/auth.api";
-import { redirect } from "@tanstack/react-router";
 
 export function useCheckUserActivationMutation() {
 

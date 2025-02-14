@@ -9,6 +9,7 @@ import path from "path";
 import applicationRoutes from "../modules/applications/applications.routes";
 import usersRoutes from "../modules/users/users.routes";
 import researchPaperRoutes from "../modules/researchPapers/researchPapers.routes";
+import academicIdentityRoutes from "../modules/academic-identity/academic-identity.routes"
 import { env } from "../config/env";
 import { db } from "../db";
 import { UserSession } from "../types/UserSession";
@@ -43,7 +44,7 @@ export function buildServer() {
     }))
 
     app.use(cors({
-        origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:4174'],
+        origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:4173', 'http://localhost:4174', 'http://localhost:5000'],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     }))
@@ -54,6 +55,7 @@ export function buildServer() {
     app.use("/api/applications", applicationRoutes);
     app.use("/api/users", usersRoutes);
     app.use("/api/research-papers", researchPaperRoutes);
+    app.use("/api/academic-identity", academicIdentityRoutes);
 
     app.get("*", (req, res) => {
         res.sendFile(path.join(__dirname, '..', '..', '..', 'frontend-2', 'dist', 'index.html'));

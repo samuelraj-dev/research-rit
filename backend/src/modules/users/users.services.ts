@@ -90,6 +90,7 @@ export async function getUsersCountByDept({
                 application_id = ${applicationId}
                 AND
                 role_id <> ${roleId}
+                AND department IS NOT NULL
             GROUP BY 
                 department
         ) subquery;

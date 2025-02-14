@@ -5,6 +5,7 @@ import { BookChapterForm } from "./forms/book-chapter-form"
 import { ConferenceForm } from "./forms/conference-form"
 import { PatentForm } from "./forms/patent-form"
 import { CopyrightForm } from "./forms/copyright-form"
+import { FundingForm } from "./forms/funding-form";
 
 export default function UploadPaperFeature() {
 
@@ -104,6 +105,19 @@ export default function UploadPaperFeature() {
                                         />
                                         <span>Copyright</span>
                                     </label>
+
+                                    <label className="flex items-center space-x-2 font-semibold">
+                                        <input
+                                            type="radio"
+                                            id="funding"
+                                            name="submission_type"
+                                            value="funding"
+                                            onChange={handleSubmissionTypeChange}
+                                            checked={selectedType === "funding"}
+                                            className="form-radio h-4 w-4 cursor-pointer"
+                                        />
+                                        <span>Funding</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -113,6 +127,7 @@ export default function UploadPaperFeature() {
                             {selectedType === "Book" && <BookForm />}
                             {selectedType === "patent" && <PatentForm />}
                             {selectedType === "copyright" && <CopyrightForm />}
+                            {selectedType === "funding" && <FundingForm />}
                         </form>
                     </div>
                 </div>

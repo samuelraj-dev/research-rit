@@ -6,9 +6,10 @@ export const Route = createFileRoute('/dashboard/_layout/users')({
   beforeLoad: async () => {
     
     if (!(await isAuthorized('user:read'))) {
-      throw redirect({
-        to: '/'
-      })
+      // throw redirect({
+      //   to: '/'
+      // })
+      throw window.location.href = '/'
     }
   },
   component: RouteComponent,

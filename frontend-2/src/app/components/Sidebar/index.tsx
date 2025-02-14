@@ -151,7 +151,11 @@ export function AppSidebar() {
                     <SidebarMenu>
                       {group.items.map((item) => (
                           <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton asChild isActive={currentPath == item.url || currentPath == item.url + '/'} className={`${item.style} rounded-[3px] transition-colors hover:bg-zinc-100 data-[active=true]:bg-primary data-[active=true]:text-accent`} >
+                            <SidebarMenuButton asChild isActive={currentPath == item.url || currentPath == item.url + '/'}
+                              className={`
+                                ${item.style}
+                                rounded-[3px] transition-colors hover:bg-zinc-100 data-[active=true]:bg-[rgb(232,247,255)] data-[active=true]:text-[#2475B3]`
+                              } >
                               <Link to={item.url}>
                                 <item.icon />
                                 <span>{item.title}</span>

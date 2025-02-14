@@ -7,3 +7,7 @@ export const getUserDataApi = async () => {
 export const getAllUsersApi = async () => {
     return (await axiosInstance.get("users")).data;
 };
+
+export const createUserApi = async (data: any) => {
+    return (await axiosInstance.post("users", data)).data;
+};

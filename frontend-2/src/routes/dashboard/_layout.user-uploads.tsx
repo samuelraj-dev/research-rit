@@ -6,9 +6,10 @@ export const Route = createFileRoute('/dashboard/_layout/user-uploads')({
   beforeLoad: async () => {
     
     if (!(await isAuthorized('research_paper:read'))) {
-      throw redirect({
-        to: '/'
-      })
+      // throw redirect({
+      //   to: '/'
+      // })
+      throw window.location.href = '/'
     }
   },
   component: UserUploadsFeature,

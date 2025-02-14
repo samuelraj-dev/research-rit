@@ -36,6 +36,7 @@ export async function createUserHandler(
         const user = await createUser({ data, applicationId, roleId: role.id });
         response.status(201).json({ user });
     } catch (error) {
+        console.log(error)
         response.status(500).json({ error });
     }
 }
@@ -82,6 +83,7 @@ export async function getUsersCountByDeptHandler(
 
     } catch (error) {
         response.status(500).json({ error });
+        console.log(error)
     }
 }
 
