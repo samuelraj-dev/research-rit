@@ -126,14 +126,15 @@ export function AddUserDialog() {
                 <SelectGroup>
                   <SelectLabel>Departments</SelectLabel>
                   <SelectItem value="CSE">B.E CSE</SelectItem>
+                  <SelectItem value="AIML">B.E CSE (AIML)</SelectItem>
                   <SelectItem value="AIDS">B.TECH AIDS</SelectItem>
+                  <SelectItem value="MECH">B.E ME</SelectItem>
                   <SelectItem value="ECE">B.E ECE</SelectItem>
                   <SelectItem value="CCE">B.E CCE</SelectItem>
-                  <SelectItem value="MECH">B.E ME</SelectItem>
                   <SelectItem value="CSBS">B.TECH CSBS</SelectItem>
                   <SelectItem value="VLSI">B.E EE (VLSI)</SelectItem>
                   <SelectItem value="BT">B.TECH BT</SelectItem>
-                  <SelectItem value="AIML">B.E CSE (AIML)</SelectItem>
+                  <SelectItem value="HNS">B.TECH H&S</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

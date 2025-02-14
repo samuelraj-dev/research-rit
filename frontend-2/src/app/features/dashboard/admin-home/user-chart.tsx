@@ -43,16 +43,36 @@ const chartConfig = {
     label: "VLSI",
     color: "hsl(var(--chart-6))",
   },
+  HNS: {
+    label: "H&S",
+    color: "hsl(var(--chart-7))",
+  },
+  AIML: {
+    label: "AIML",
+    color: "hsl(var(--chart-8))",
+  },
+  CCE: {
+    label: "CCE",
+    color: "hsl(var(--chart-9))",
+  },
+  BT: {
+    label: "BT",
+    color: "hsl(var(--chart-10))",
+  },
 } satisfies ChartConfig
 export function UserChart({ data }: { data: any }) {
 
   const chartData = [
+    { name: "CSE", values: data?.CSE || 0, fill: "var(--color-CSE)" },
+    { name: "AIML", values: data?.VLSI || 0, fill: "var(--color-AIML)" },
     { name: "AIDS", values: data?.AIDS || 0, fill: "var(--color-AIDS)" },
     { name: "MECH", values: data?.MECH || 0, fill: "var(--color-MECH)" },
-    { name: "CSE", values: data?.CSE || 0, fill: "var(--color-CSE)" },
-    { name: "CSBS", values: data?.CSBS || 0, fill: "var(--color-CSBS)" },
     { name: "ECE", values: data?.ECE || 0, fill: "var(--color-ECE)" },
+    { name: "CCE", values: data?.CCE || 0, fill: "var(--color-CCE)" },
+    { name: "CSBS", values: data?.CSBS || 0, fill: "var(--color-CSBS)" },
     { name: "VLSI", values: data?.VLSI || 0, fill: "var(--color-VLSI)" },
+    { name: "BT", values: data?.BT || 0, fill: "var(--color-BT)" },
+    { name: "HNS", values: data?.HNS || 0, fill: "var(--color-HNS)" },
   ]
 
   return (

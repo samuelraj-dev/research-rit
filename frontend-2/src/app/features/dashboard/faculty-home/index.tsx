@@ -22,7 +22,7 @@ export default function UserHomeFeature() {
         {/* Main Content */}
         <div className="mt-1 flex-grow">
           <div className='flex items-center justify-center'>
-            <h1 className="text-4xl font-bold mb-6">Your Profile</h1>
+            <h1 className="text-4xl font-bold mb-6">Faculty Dashboard</h1>
           </div>
   
           {/* Bento Grid Container */}
