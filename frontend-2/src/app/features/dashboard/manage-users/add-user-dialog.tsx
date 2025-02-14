@@ -5,7 +5,6 @@ import { Label } from "@/app/components/ui/label"
 import { Input } from "@/app/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { useState } from "react";
-import axios from "axios";
 import { useCreateUserMutation } from "@/libs/services/mutations/user.mutation";
 
 export function AddUserDialog() {
@@ -114,14 +113,15 @@ export function AddUserDialog() {
                 <SelectGroup>
                   <SelectLabel>Departments</SelectLabel>
                   <SelectItem value="CSE">B.E CSE</SelectItem>
+                  <SelectItem value="AIML">B.E CSE (AIML)</SelectItem>
                   <SelectItem value="AIDS">B.TECH AIDS</SelectItem>
+                  <SelectItem value="MECH">B.E ME</SelectItem>
                   <SelectItem value="ECE">B.E ECE</SelectItem>
                   <SelectItem value="CCE">B.E CCE</SelectItem>
-                  <SelectItem value="MECH">B.E ME</SelectItem>
                   <SelectItem value="CSBS">B.TECH CSBS</SelectItem>
                   <SelectItem value="VLSI">B.E EE (VLSI)</SelectItem>
                   <SelectItem value="BT">B.TECH BT</SelectItem>
-                  <SelectItem value="AIML">B.E CSE (AIML)</SelectItem>
+                  <SelectItem value="HNS">B.TECH H&S</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
